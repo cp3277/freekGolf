@@ -6,9 +6,14 @@
     <a href="/" class="button">Home</a>
 
     <h2>Select Your Course</h2>
-    <a href="reserve.html" class="button">Haverford Reserve</a>
-    <a href="sedgely.html" class="button">Sedgely Woods</a>
-    <a class="button">Course 3</a>
+
+    <div class="courseList">
+      {% for course in courses %}
+      <a href="playerSelect.html" class="button">{{ course.name }}</a>
+      {% else %}
+      <p>No courses found yet. Add some to the database.</p>
+      {% endfor %}
+    </div>
   </body>
 
   <style>
@@ -20,6 +25,14 @@
       text-decoration: none;
       border-radius: 8px;
       font-size: 1.5rem;
+      margin: 8px;
+    }
+
+    .courseList {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
     }
   </style>
 </html>

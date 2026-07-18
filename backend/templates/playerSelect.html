@@ -3,11 +3,11 @@
   <body>
     <h1>Select Players</h1>
     <div class="playerList">
-      <button id="adam" class="playerButton">Adam</button>
-      <button id="john" class="playerButton">John</button>
-      <button id="colin" class="playerButton">Colin</button>
-      <button id="matt" class="playerButton">Matt</button>
-      <button id="toshan" class="playerButton">Toshan</button>
+      {% for player in players %}
+      <button id="{{ player.name }}" class="playerButton">{{ player.name }}</button>
+      {% else %}
+      <p>No players found yet. Add some to the database.</p>
+      {% endfor %}
     </div>
 
     <button onclick="startRound()" class="button">Start</button>
@@ -25,14 +25,10 @@
         const player = this.id;
 
         if (this.classList.contains("selected")) {
-          // Remove player
           this.classList.remove("selected");
-
           selectedPlayers = selectedPlayers.filter((p) => p !== player);
         } else {
-          // Add player
           this.classList.add("selected");
-
           selectedPlayers.push(player);
         }
 
