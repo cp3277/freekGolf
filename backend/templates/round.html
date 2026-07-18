@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+  <body>
+    <h1>Current Round</h1>
+
+    <ul class="playerList">
+      {% for player in players %}
+      <li>
+        <span class="playerName">{{ player }}</span>
+
+        <div class="scoreControls">
+          <span class="minus">-</span>
+          <span class="playerScore">0</span>
+          <span class="plus">+</span>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+
+  <script>
+    const players = document.querySelectorAll(".playerList li");
+
+    players.forEach((player) => {
+      const minusButton = player.querySelector(".minus");
+      const plusButton = player.querySelector(".plus");
+      const scoreDisplay = player.querySelector(".playerScore");
+
+      let score = 0;
+
+      function updateScore() {
+        if (score > 0) {
+          scoreDisplay.textContent = "+" + score;
+        } else {
+          scoreDisplay.textContent = score;
+        }
+      }
+
+      plusButton.addEventListener("click", () => {
+        score++;
+        updateScore();
+      });
+
+      minusButton.addEventListener("click", () => {
+        score--;
+        updateScore();
+      });
+    });
+  </script>
+
+  <style>
+    .playerList li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 15px 20px;
+      margin-bottom: 15px;
+
+      border: 2px solid #5c51a0;
+      border-radius: 10px;
+    }
+
+    .scoreControls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .playerScore {
+      font-size: 32px;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .plus,
+    .minus {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 40px;
+      height: 40px;
+
+      border-radius: 50%;
+      border: 2px solid #5c51a0;
+
+      font-size: 28px;
+      font-weight: bold;
+
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .playerName {
+      font-size: 32px;
+      font-weight: bold;
+    }
+  </style>
+</html>

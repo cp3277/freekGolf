@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <body>
+    <h1>Select Players</h1>
+    <div class="playerList">
+      <button id="adam" class="playerButton">Adam</button>
+      <button id="john" class="playerButton">John</button>
+      <button id="colin" class="playerButton">Colin</button>
+      <button id="matt" class="playerButton">Matt</button>
+      <button id="toshan" class="playerButton">Toshan</button>
+    </div>
+
+    <button onclick="startRound()" class="button">Start</button>
+  </body>
+
+  <style></style>
+
+  <script>
+    let selectedPlayers = [];
+
+    const buttons = document.querySelectorAll(".playerButton");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const player = this.id;
+
+        if (this.classList.contains("selected")) {
+          // Remove player
+          this.classList.remove("selected");
+
+          selectedPlayers = selectedPlayers.filter((p) => p !== player);
+        } else {
+          // Add player
+          this.classList.add("selected");
+
+          selectedPlayers.push(player);
+        }
+
+        console.log(selectedPlayers);
+      });
+    });
+
+    function startRound() {
+      fetch("/startRound", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          players: selectedPlayers,
+        }),
+      })
+        .then((response) => response.text())
+        .then((url) => {
+          window.location.href = url;
+        });
+    }
+  </script>
+
+  <style>
+    .playerList {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      height: 50vh;
+    }
+
+    .playerButton {
+      background-color: #5c51a0;
+      width: 200px;
+      height: 50px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .playerButton.selected {
+      background-color: #51a086;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #5c51a0;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1.5rem;
+    }
+  </style>
+</html>
